@@ -1,0 +1,68 @@
+#%%
+# diz-me as variáveis que existem no ficheiro "file_name"
+print(file_name.variables.keys())
+
+# diz-me tipo da variável, tipo de dados, dimensões, atritutos da variável, etc
+print(file_name.variables['U10']) 
+
+
+
+#%% <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#               MAPA DOMNÍNIO DO MODELO WRF
+
+plt.figure(figsize=(10, 8))
+
+# Definir as bordas do mapa
+m = Basemap(llcrnrlon=lon_ERA5.min(), llcrnrlat=lat_ERA5.min(), urcrnrlon=lon_ERA5.max(), urcrnrlat=lat_ERA5.max(), resolution='l')
+#llcrnr = lower left corner  e urcrnr = upper right corner
+m.drawcoastlines() # contorno do continente
+x, y = m(lon_ERA5, lat_ERA5)
+m.scatter(x, y, marker='o', color='red')
+plt.title('Domínio do Modelo WRF')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.show()
+#<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+# Exemplo de como acessar a primeira data
+print(f"Primeira data no DateTimeIndex: {time_index_ERA5[0]}")
+
+#%%
+for date_ERA5 in time_dates_ERA5[:5]:  # Imprime as primeiras 5 datas como exemplo
+    print(date_ERA5)
+
+# Imprimir a primeira e a última data
+print(f"Primeira data: {time_dates_ERA5[0]}")
+print(f"Última data: {time_dates_ERA5[-1]}")
+
+
+
+# Verificar as dimensões dos dados
+print(lon_ERA5.shape)  # Deve ser (nx, ny)
+print(lat_ERA5.shape)  # Deve ser (nx, ny)
+
+
+# Exibir as coordenadas do ponto mais próximo
+print(f"Coordenadas do ponto mais próximo à Praia da Barra:")
+print(f"Longitude: {lon_nearest_ERA5}")
+print(f"Latitude: {lat_nearest_ERA5}")
+
+
+# Exibir as médias diárias para u10 e v10
+for i, date in enumerate(daily_dates_ERA5[:5]):  # Mostrar as primeiras 5 datas como exemplo
+    print(f"Data: {date}, u10 média diária: {u10_daily_mean_ERA5[i]}, v10 média diária: {v10_daily_mean_ERA5[i]}")
+
+file_name_ERA5.close()
+
+# Exibir as médias diárias para u10 e v10
+for i, date in enumerate(daily_dates_MPI[:5]):  # Mostrar as primeiras 5 datas como exemplo
+    print(f"Data: {date}, u10 média diária: {u10_daily_mean_MPI[i]}, v10 média diária: {v10_daily_mean_MPI[i]}")
+
+file_name_MPI.close()
+
+
+# %%  NOTAS
+
+#len() -> nº de elementos
+#
